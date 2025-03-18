@@ -19,7 +19,7 @@ always @(*) begin
         immediate  = 4'b0000;            // No immediate value in R-type
     end else begin
         
-        assign extended_value = {4'b0000, instruction[3:0]}; // Zero-extend to 8 bits
+        extended_value = {4'b0000, instruction[3:0]}; // Zero-extend to 8 bits
         
         
         case (opcode)

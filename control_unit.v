@@ -49,7 +49,7 @@ else begin
             ALU_src = 1'b1;
             branch = 1'b1;
         end
-        4'b0110: begin
+        4'b0110: begin // load instruction
             ALU_src = 1'b1;
             load = 1'b1;
             reg_write = 1'b1;

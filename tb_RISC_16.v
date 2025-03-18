@@ -124,7 +124,7 @@ module tb_RISC_16;
 
 
     // Clock generation (10ns period -> 100MHz clock)
-//    always #5 clk = ~clk;
+    always #10 clk = ~clk;
 
 initial begin
     // Enable VCD dumping
@@ -135,28 +135,55 @@ initial begin
     #10 rst = 1; // Release reset after 10ns
     #10 rst = 0;
     
+
+
+    clk = 1'b0;
+    // forever begin
+    //   #1 clk = ~clk;
+    // end
+
     #10
-    assign clk = ~clk;
-    #10
-    assign clk = ~clk;
-    #10
-    assign clk = ~clk;
-        #10
-    assign clk = ~clk;
-    #10
-    assign clk = ~clk;
-    #10
-    assign clk = ~clk;
-    #10
-    assign clk = ~clk;
-    #10
-    assign clk = ~clk;
+    clk = ~clk;
+    // #10
+    // clk = ~clk;
+    // #10
+    // clk = ~clk;
+    // #10
+    // clk = ~clk;
+    // #10
+    // clk = ~clk;
+    // #10
+    // clk = ~clk;
+    // #10
+    // clk = ~clk;
 
 
 
     #500;  // Let the simulation run for a longer time
     $finish;  // Stop simulation
 end
+
+
+ // Clock generation
+    // always #5 clk = ~clk; // 10ns period (5ns high, 5ns low)
+
+    // initial begin
+    //     // Initialize signals
+    //      $dumpfile("waveform.vcd");  // Name of the output waveform file
+    //     clk = 0;
+    //     rst = 1;
+    //     // pc_increment = 4'b0010; // Increment by 2
+    //     clk = 1;
+        
+    //     #10 rst = 0;  // Release reset after 10ns
+    //     #600 $finish; // Run simulation for 600ns
+    // end
+
+    // Monitor changes
+    initial begin
+        $monitor("Time: %0t | clk: %b | rst: %b | pc_increment: %b | instruction_addr: %b", $time, clk, rst, pc_increment, instruction_addr);
+    end
+
 
 //always #5 clk = ~clk; // Toggle clock every 5ns (10ns period)
 
