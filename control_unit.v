@@ -25,7 +25,8 @@ module control_unit(
     output reg branch,
     output reg ALU_src,
     output reg load,
-    output reg mem_write
+    output reg mem_write,
+    output reg jump 
 );
 
 initial begin
@@ -34,13 +35,17 @@ branch = 1'b0;
 ALU_src = 1'b0;
 load = 1'b0;
 mem_write = 1'b0;
+jump = 1'b0;
 end
+
 always @(*) begin
 reg_write = 1'b0;
 branch = 1'b0;
 ALU_src = 1'b0;
 load = 1'b0;
 mem_write = 1'b0;
+jump = 1'b0;
+
 
 if (opcode < 5) begin 
     // R-type instruction execution 
@@ -62,6 +67,9 @@ else begin
             ALU_src = 1'b1;
             load = 1'b1;
             mem_write = 1'b1;
+        end
+        4'b1000: begin // store instruction 
+            jump = 1'b1;
         end
     endcase
 end

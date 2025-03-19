@@ -29,6 +29,7 @@ module tb_RISC_16;
     wire reg_write;        // Control signal for Register Write
     wire ALU_src;
     wire branch;
+    wire jump;
     
     wire branch_increment_signal;
     wire [7:0] pc_increment;
@@ -41,7 +42,9 @@ module tb_RISC_16;
         .clk(clk),
         .rst(rst),
         .instruction_addr(instruction_addr),
-        .pc_increment(pc_increment)
+        .pc_increment(pc_increment),
+        .jump(jump),
+        .jump_label(immediate)
     );
     
     instruction_memory im(
@@ -64,7 +67,8 @@ module tb_RISC_16;
     .ALU_src(ALU_src),
     .reg_write(reg_write),
     .load(load_signal),
-    .mem_write(mem_write)
+    .mem_write(mem_write),
+    .jump(jump)
     );
     
     Register_file rf(
@@ -145,18 +149,6 @@ initial begin
 
     #10
     clk = ~clk;
-    // #10
-    // clk = ~clk;
-    // #10
-    // clk = ~clk;
-    // #10
-    // clk = ~clk;
-    // #10
-    // clk = ~clk;
-    // #10
-    // clk = ~clk;
-    // #10
-    // clk = ~clk;
 
 
 
@@ -165,20 +157,7 @@ initial begin
 end
 
 
- // Clock generation
-    // always #5 clk = ~clk; // 10ns period (5ns high, 5ns low)
 
-    // initial begin
-    //     // Initialize signals
-    //      $dumpfile("waveform.vcd");  // Name of the output waveform file
-    //     clk = 0;
-    //     rst = 1;
-    //     // pc_increment = 4'b0010; // Increment by 2
-    //     clk = 1;
-        
-    //     #10 rst = 0;  // Release reset after 10ns
-    //     #600 $finish; // Run simulation for 600ns
-    // end
 
     // Monitor changes
     initial begin

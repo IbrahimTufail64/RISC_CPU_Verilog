@@ -22,7 +22,7 @@ initial begin
     register_memory[1] = 16'b0110_0101_0001_0110; // LOAD $r0 6($r1) : r0 = r1+6
     register_memory[2] = 16'b0001_0000_0100_0101;  
     register_memory[3] = 16'b0110_0000_0101_0111;  
-    register_memory[4] = 16'b0001_0000_1100_1011;  
+    register_memory[4] = 16'b1000_0000_0000_1011;  
     register_memory[5] = 16'b0101_0000_0001_0000;  
     register_memory[6] = 16'b0101_0000_0001_0010;  
     register_memory[7] = 16'b0011_0100_1100_1011;  

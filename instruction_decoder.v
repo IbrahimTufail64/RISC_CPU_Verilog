@@ -20,22 +20,23 @@ always @(*) begin
     end else begin
         
         extended_value = {4'b0000, instruction[3:0]}; // Zero-extend to 8 bits
+        write_reg  = instruction[11:8];            // No destination register in I-type
+        immediate  = extended_value;   // Extract immediate value
         
-        
-        case (opcode)
-                    4'b0101: begin // BEQ
-                        write_reg  = 4'b0000;            // No destination register in I-type
-                        immediate  = extended_value;   // Extract immediate value
-                    end
-                    4'b0110: begin // LOAD
-                        write_reg  = instruction[11:8];            // No destination register in I-type
-                        immediate  = extended_value;   // Extract immediate value
-                    end
-                    4'b0111: begin // STORE
-                        write_reg  = instruction[11:8];            // No destination register in I-type
-                        immediate  = extended_value;   // Extract immediate value
-                    end
-        endcase
+        // case (opcode)
+        //             4'b0101: begin // BEQ
+        //                 write_reg  = 4'b0000;            // No destination register in I-type
+        //                 immediate  = extended_value;   // Extract immediate value
+        //             end
+        //             4'b0110: begin // LOAD
+        //                 write_reg  = instruction[11:8];            // No destination register in I-type
+        //                 immediate  = extended_value;   // Extract immediate value
+        //             end
+        //             4'b0111: begin // STORE
+        //                 write_reg  = instruction[11:8];            // No destination register in I-type
+        //                 immediate  = extended_value;   // Extract immediate value
+        //             end
+        // endcase
     end
 end
 
