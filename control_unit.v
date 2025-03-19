@@ -58,6 +58,10 @@ else begin
             ALU_src = 1'b1;
             branch = 1'b1;
         end
+        4'b1000: begin // branch if not equal BNE
+            ALU_src = 1'b1;
+            branch = 1'b1;
+        end
         4'b1001: begin // load instruction
             ALU_src = 1'b1;
             load = 1'b1;
