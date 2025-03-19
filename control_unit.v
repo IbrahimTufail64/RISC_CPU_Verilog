@@ -24,19 +24,23 @@ module control_unit(
     output reg reg_write,        // Control signal for Register Write
     output reg branch,
     output reg ALU_src,
-    output reg load
+    output reg load,
+    output reg mem_write
 );
 
 initial begin
 reg_write = 1'b0;
 branch = 1'b0;
 ALU_src = 1'b0;
+load = 1'b0;
+mem_write = 1'b0;
 end
 always @(*) begin
 reg_write = 1'b0;
 branch = 1'b0;
 ALU_src = 1'b0;
 load = 1'b0;
+mem_write = 1'b0;
 
 if (opcode < 5) begin 
     // R-type instruction execution 
@@ -53,6 +57,11 @@ else begin
             ALU_src = 1'b1;
             load = 1'b1;
             reg_write = 1'b1;
+        end
+        4'b0111: begin // store instruction 
+            ALU_src = 1'b1;
+            load = 1'b1;
+            mem_write = 1'b1;
         end
     endcase
 end

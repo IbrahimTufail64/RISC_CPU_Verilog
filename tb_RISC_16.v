@@ -20,8 +20,8 @@ module tb_RISC_16;
     
     //data memory
     wire [7:0] read_data;
-    wire [7:0] write_addr;
-    wire [7:0] write_mem_data;
+    // wire [7:0] write_addr;
+    // wire [7:0] read_data1;
     wire mem_write;
     wire load_signal;
     
@@ -63,7 +63,8 @@ module tb_RISC_16;
     .branch(branch),
     .ALU_src(ALU_src),
     .reg_write(reg_write),
-    .load(load_signal)
+    .load(load_signal),
+    .mem_write(mem_write)
     );
     
     Register_file rf(
@@ -88,8 +89,8 @@ module tb_RISC_16;
     
     data_memory mm(
     .read_addr(alu_result),
-    .write_addr(write_addr),
-    .write_data(write_mem_data),
+    .write_addr(alu_result),
+    .write_data(read_data1),
     .mem_write(mem_write),
     .read_data(read_data)
     );

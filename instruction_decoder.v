@@ -31,6 +31,10 @@ always @(*) begin
                         write_reg  = instruction[11:8];            // No destination register in I-type
                         immediate  = extended_value;   // Extract immediate value
                     end
+                    4'b0111: begin // STORE
+                        write_reg  = instruction[11:8];            // No destination register in I-type
+                        immediate  = extended_value;   // Extract immediate value
+                    end
         endcase
     end
 end
