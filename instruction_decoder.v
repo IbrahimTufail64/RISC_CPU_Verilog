@@ -14,7 +14,7 @@ always @(*) begin
     read_reg1 = instruction[11:8];  // Extract Rs (source register 1)
     read_reg2 = instruction[7:4];   // Extract Rt (source register 2)
     
-    if (opcode < 4'b0101) begin // R-type instruction
+    if (opcode < 4'b0111) begin // R-type instruction
         write_reg  = instruction[3:0];   // Extract Rd (destination register)
         immediate  = 4'b0000;            // No immediate value in R-type
     end else begin

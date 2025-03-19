@@ -47,28 +47,28 @@ mem_write = 1'b0;
 jump = 1'b0;
 
 
-if (opcode < 5) begin 
+if (opcode < 7) begin 
     // R-type instruction execution 
     reg_write = 1'b1;
     ALU_src = 1'b1;
 end
 else begin
     case (opcode)
-        4'b0101: begin // branch if equal BNE
+        4'b0111: begin // branch if equal BQE
             ALU_src = 1'b1;
             branch = 1'b1;
         end
-        4'b0110: begin // load instruction
+        4'b1001: begin // load instruction
             ALU_src = 1'b1;
             load = 1'b1;
             reg_write = 1'b1;
         end
-        4'b0111: begin // store instruction 
+        4'b1010: begin // store instruction 
             ALU_src = 1'b1;
             load = 1'b1;
             mem_write = 1'b1;
         end
-        4'b1000: begin // store instruction 
+        4'b1011: begin // jump
             jump = 1'b1;
         end
     endcase
