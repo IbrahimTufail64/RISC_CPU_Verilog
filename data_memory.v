@@ -7,6 +7,7 @@ input [7:0] read_addr,
 input [7:0] write_addr,
 input [7:0] write_data,
 input mem_write,
+input mem_enable,
 output reg [7:0] read_data
 );
 
@@ -19,10 +20,10 @@ initial begin
 end
 
 always @(*) begin
-
-    if (mem_write) 
-        memory[write_addr] <= write_data;
-    read_data = memory[read_addr];
+    if (mem_enable)
+        if (mem_write) 
+            memory[write_addr] <= write_data;
+        read_data = memory[read_addr];
 end
 
 

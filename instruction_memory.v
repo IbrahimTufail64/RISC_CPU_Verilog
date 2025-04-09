@@ -3,7 +3,8 @@
 
 module instruction_memory(
 input wire [3:0] addr,
-output wire [15:0] instruction
+output wire [15:0] instruction,
+input IR_enable
 );
 
 reg [15:0] register_memory [15:0];

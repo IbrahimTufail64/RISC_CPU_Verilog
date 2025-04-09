@@ -36,6 +36,11 @@ module tb_RISC_16;
     
     wire [7:0] alu_result;
     wire [7:0] read_data1_mux;
+    //enable signals
+    wire PC_enable;
+    wire reg_enable;
+    wire IR_enable;
+    wire mem_enable;
     
     // Instantiate the 8-bit counter module
     program_counter uut (
@@ -44,12 +49,14 @@ module tb_RISC_16;
         .instruction_addr(instruction_addr),
         .pc_increment(pc_increment),
         .jump(jump),
-        .jump_label(immediate)
+        .jump_label(immediate),
+        .PC_enable(PC_enable)
     );
     
     instruction_memory im(
       .addr(instruction_addr),
-      .instruction(instruction)
+      .instruction(instruction),
+      .IR_enable(IR_enable)
     );
     
     instruction_decoder id(
@@ -61,14 +68,32 @@ module tb_RISC_16;
     .immediate(immediate)
     );
     
-    control_unit cu(
+    // control_unit cu(
+    // .opcode(opcode),
+    // .branch(branch),
+    // .ALU_src(ALU_src),
+    // .reg_write(reg_write),
+    // .load(load_signal),
+    // .mem_write(mem_write),
+    // .jump(jump)
+    // );
+
+    control_unit_multicycle cu(
+    .reset(rst),
+    .clk(clk),
     .opcode(opcode),
     .branch(branch),
     .ALU_src(ALU_src),
     .reg_write(reg_write),
     .load(load_signal),
     .mem_write(mem_write),
-    .jump(jump)
+    .jump(jump),
+    //enable signals 
+    .PC_enable(PC_enable),
+    .reg_enable(reg_enable),
+    .mem_enable(mem_enable),
+    .IR_enable(IR_enable)
+
     );
     
     Register_file rf(
@@ -78,7 +103,8 @@ module tb_RISC_16;
     .write_data(write_data),
     .read_data1(read_data1),
     .read_data2(read_data2),
-    .reg_write(reg_write)
+    .reg_write(reg_write),
+    .reg_enable(reg_enable)
     );
     
     ALU alu(
@@ -96,7 +122,8 @@ module tb_RISC_16;
     .write_addr(alu_result),
     .write_data(read_data1),
     .mem_write(mem_write),
-    .read_data(read_data)
+    .read_data(read_data),
+    .mem_enable(mem_enable)
     );
     
     MUX memory_ALU_mux(
@@ -137,6 +164,7 @@ initial begin
     $dumpvars(0, tb_RISC_16);    // Dump all variables in the module
     clk = 0;
     rst = 0;  
+    // PC_enable = 0; // Initialize PC_enable to 0
     #10 rst = 1; // Release reset after 10ns
     #10 rst = 0;
     
@@ -161,7 +189,7 @@ end
 
     // Monitor changes
     initial begin
-        $monitor("Time: %0t | clk: %b | rst: %b | pc_increment: %b | instruction_addr: %b", $time, clk, rst, pc_increment, instruction_addr);
+        $monitor("Time: %0t | clk: %b | rst: %b | pc_increment: %b | instruction_addr: %b | PC_enable: %b | IR_enable: %b | mem_enable: %b | reg_enable: %b", $time, clk, rst, pc_increment, instruction_addr,PC_enable,IR_enable,mem_enable,reg_enable);
     end
 
 
