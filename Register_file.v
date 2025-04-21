@@ -14,6 +14,8 @@ output reg [7:0] read_data2
 );
 
 reg [7:0] register_memory [15:0];
+reg [7:0] register_1;
+reg [7:0] register_2;
 integer i;
 initial begin
    
@@ -22,22 +24,26 @@ initial begin
 //    register_memory[0] = 16'b0001_0000_0001_0010; 
 end
 
-always @(*) begin
-    if (reg_write | reg_enable) 
-        register_memory[write_reg] <= write_data;
-end
+// always @(*) begin
+//     if (reg_write | reg_enable) 
+//         register_memory[write_reg] <= write_data;
+// end
 
-reg [7:0] read_data1_reg, read_data2_reg;
+
 
 // Read operation
 always @(*) begin
     if (reg_enable) begin
         read_data1 = register_memory[read_reg1];
         read_data2 = register_memory[read_reg2];
+        register_1 = register_memory[read_reg1];
+        register_2 = register_memory[read_reg2];
     end else begin
-        read_data1 = 8'b0;
-        read_data2 = 8'b0;
+        read_data1 = register_1;
+        read_data2 = register_2;
     end
+    if (reg_write & reg_enable) 
+        register_memory[write_reg] <= write_data;
 end
 
 

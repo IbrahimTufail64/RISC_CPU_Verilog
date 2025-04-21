@@ -13,6 +13,8 @@ output reg [7:0] read_data
 
 reg [7:0] memory [255:0];
 integer i;
+reg [7:0] register ;
+
 initial begin
    
     for (i = 0; i < 256; i = i + 1)
@@ -24,6 +26,9 @@ always @(*) begin
         if (mem_write) 
             memory[write_addr] <= write_data;
         read_data = memory[read_addr];
+        register = memory[read_addr];
+    // else 
+        // read_data = register;
 end
 
 
