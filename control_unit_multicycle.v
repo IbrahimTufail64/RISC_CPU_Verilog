@@ -1,11 +1,12 @@
 module control_unit_multicycle(
     input wire clk,              // Clock input
     input wire reset,            // Reset signal
-    input wire [3:0] opcode,     // Opcode as input
+    input wire [4:0] opcode,     // Opcode as input
     output reg reg_write,        // Control signal for Register Write
     output reg branch,
     output reg ALU_src,
     output reg load,
+    output reg immediate_signal,
     output reg mem_write,
     output reg jump,
     // New control signals for multi-cycle
@@ -43,15 +44,15 @@ always @(*) begin
         FETCH: next_state = DECODE;
         DECODE: next_state = EXECUTE;
         EXECUTE: begin
-            if (opcode == 4'b1001 || opcode == 4'b1010)  // Load or Store
+            if (opcode == 5'b01001 || opcode == 5'b01010)  // Load or Store
                 next_state = MEMORY;
-            else if (opcode < 7 || opcode == 4'b1001)    // R-type or Load needs writeback
+            else if (opcode < 7 || opcode == 5'b01001)    // R-type or Load needs writeback
                 next_state = WRITEBACK;
             else                                        // Branch or Jump
                 next_state = FETCH;
         end
         MEMORY: begin
-            if (opcode == 4'b1001)                      // Load needs writeback
+            if (opcode == 5'b01001)                      // Load needs writeback
                 next_state = WRITEBACK;
             else                                        // Store
                 next_state = FETCH;
@@ -68,6 +69,7 @@ always @(*) begin
     branch = 1'b0;
     ALU_src = 1'b0;
     load = 1'b0;
+    immediate_signal = 1'b0;
     mem_write = 1'b0;
     jump = 1'b0;
     PC_enable = 1'b0;
@@ -90,17 +92,21 @@ always @(*) begin
             if (opcode < 7) begin
                 ALU_src = 1'b1;  // R-type
             end
+            else if (opcode[5] == 1'b1) begin
+                ALU_src = 1'b0;  // I-type
+                immediate_signal = 1'b1; 
+            end
             else begin
                 case (opcode)
-                    4'b0111, 4'b1000: begin  // BEQ, BNE
+                    5'b00111, 5'b01000: begin  // BEQ, BNE
                         ALU_src = 1'b1;
                         branch = 1'b1;
                         PC_enable = 1'b1;    // Update PC for branch
                     end
-                    4'b1001, 4'b1010: begin  // Load/Store
+                    5'b01001, 5'b01010: begin  // Load/Store
                         ALU_src = 1'b1;
                     end
-                    4'b1011: begin          // Jump
+                    5'b01011: begin          // Jump
                         jump = 1'b1;
                         PC_enable = 1'b1;    // Update PC for jump
                     end
@@ -110,10 +116,11 @@ always @(*) begin
         
         MEMORY: begin
             mem_enable = 1'b1;   // Enable memory
-            if (opcode == 4'b1001) begin  // Load
+            if (opcode == 5'b01001) begin  // Load
                 load = 1'b1;
+                immediate_signal = 1'b1;  
             end
-            else if (opcode == 4'b1010) begin  // Store
+            else if (opcode == 5'b01010) begin  // Store
                 mem_write = 1'b1;
                 PC_enable = 1'b1;  // Update PC after store completes
             end
