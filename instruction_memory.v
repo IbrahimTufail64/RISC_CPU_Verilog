@@ -29,7 +29,7 @@ initial begin
     // register_memory[4] = 16'b0111_0000_1111_0010;  // branch if equal   
     register_memory[4] = 16'b1011_0000_0000_0000;  // jump  
     register_memory[5] = 16'b0101_0000_0001_0000;  
-    register_memory[6] = 16'b0000_0000_0001_0010;  
+    register_memory[6] = 16'b0000_0000_0001_0010;
     register_memory[7] = 16'b1011_0000_0000_0000; // jump to 0 instruction addr  
 end
 

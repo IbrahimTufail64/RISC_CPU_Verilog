@@ -24,10 +24,6 @@ initial begin
 //    register_memory[0] = 16'b0001_0000_0001_0010; 
 end
 
-// always @(*) begin
-//     if (reg_write | reg_enable) 
-//         register_memory[write_reg] <= write_data;
-// end
 
 
 
