@@ -20,7 +20,20 @@ integer i;
 initial begin
    
     for (i = 0; i < 16; i = i + 1)
-        register_memory[i] = 16'b0000_0000_0000_0101; // Default to 0
+        register_memory[i] = 16'b0000_0000_0000_0101; // Default to 5
+    //let: r1 = 1,  r2 = 1, r3 = 5, r4 = 0, r5 = 5
+    register_memory[1] = 16'b0000_0000_0000_0001; // r1 = 1
+    register_memory[2] = 16'b0000_0000_0000_0001; // r2 = 1
+    register_memory[3] = 16'b0000_0000_0000_0101; // r3 = 5
+    register_memory[4] = 16'b0000_0000_0000_0101; // r4 = 5
+    register_memory[5] = 16'b0000_0000_0000_0101; // r5 = 5
+    //let r6 = 0, r7 = 1, r8 = 0, r9 = 0 , r10 = 0, r2 = 1, r11 = 5
+    register_memory[6] = 16'b0000_0000_0000_0000; // r6 = 0
+    register_memory[7] = 16'b0000_0000_0000_0001; // r7 = 1
+    register_memory[8] = 16'b0000_0000_0000_0000; // r8 = 0
+    register_memory[9] = 16'b0000_0000_0000_0000; // r9 = 0
+    register_memory[10] = 16'b0000_0000_0000_0000; // r10 = 0
+    register_memory[11] = 16'b0000_0000_0000_0101; // r11 = 5
 //    register_memory[0] = 16'b0001_0000_0001_0010; 
 end
 
