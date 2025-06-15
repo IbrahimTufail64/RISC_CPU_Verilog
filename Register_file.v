@@ -10,7 +10,9 @@ input [7:0] write_data,
 input reg_write,
 input reg_enable,
 output reg [7:0] read_data1,
-output reg [7:0] read_data2
+output reg [7:0] read_data2,
+    output [7:0] r4_out,
+    output [7:0] r8_out
 );
 
 reg [7:0] register_memory [15:0];
@@ -33,7 +35,7 @@ initial begin
     register_memory[8] = 16'b0000_0000_0000_0000; // r8 = 0
     register_memory[9] = 16'b0000_0000_0000_0000; // r9 = 0
     register_memory[10] = 16'b0000_0000_0000_0000; // r10 = 0
-    register_memory[11] = 16'b0000_0000_0000_0101; // r11 = 5
+    register_memory[11] = 16'b0000_0000_0000_0100; // r11 = 4
 //    register_memory[0] = 16'b0001_0000_0001_0010; 
 end
 
@@ -41,19 +43,41 @@ end
 
 
 // Read operation
+// always @(*) begin
+//     if (reg_enable) begin
+//         read_data1 = register_memory[read_reg1];
+//         read_data2 = register_memory[read_reg2];
+//         register_1 = register_memory[read_reg1];
+//         register_2 = register_memory[read_reg2];
+//     end else begin
+//         read_data1 = register_1;
+//         read_data2 = register_2;
+//     end
+//     if (reg_write & reg_enable) 
+//         register_memory[write_reg] <= write_data;
+// end
+
+// Combined READ/WRITE operation - combinational
 always @(*) begin
     if (reg_enable) begin
         read_data1 = register_memory[read_reg1];
         read_data2 = register_memory[read_reg2];
         register_1 = register_memory[read_reg1];
         register_2 = register_memory[read_reg2];
+        
+        // Write operation using blocking assignment
+        if (reg_write) begin
+            register_memory[write_reg] = write_data;
+        end
     end else begin
         read_data1 = register_1;
         read_data2 = register_2;
     end
-    if (reg_write & reg_enable) 
-        register_memory[write_reg] <= write_data;
 end
+
+assign r4_out = register_memory[4];
+assign r8_out = register_memory[8];
+
 
 
 endmodule

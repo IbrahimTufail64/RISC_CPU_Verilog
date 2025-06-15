@@ -5,11 +5,17 @@ module tb_RISC_16;
     // Testbench signals
     reg clk;
     reg rst;
+    wire [7:0] r4_out;  // Output for debugging
+    wire [7:0] r8_out;  // Output for debugging
+    wire [5:0] instruction_addr; // Output for instruction address
     
     // Instantiate the top module
     RISC_16_top uut (
         .clk(clk),
-        .rst(rst)
+        .rst(rst),
+        .r4_out(r4_out),  // Connect output for debugging
+        .r8_out(r8_out),   // Connect output for debugging
+        .instruction_addr(instruction_addr) // Connect instruction address output
     );
 
     // Clock generation (10ns period -> 100MHz clock)

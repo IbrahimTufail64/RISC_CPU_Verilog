@@ -1,0 +1,36 @@
+multiplication by 5:
+
+let: r1 = 1,  r2 = 1, r3 = 5, r4 = 0, r5 = 10
+
+1. ADD r4 r3 r4 // multiplication
+00000_0100_0011_0100
+2. ADD r1 r2 r1 // increment counter
+00000_0001_0010_0001
+3. BEQ  r1 r5 0x(5)
+00111_0001_0101_0101
+4. JUMP 0x(1)
+01011_0000_0000_0001
+
+
+
+Fibonnacci sequence 
+
+let r6 = 0, r7 = 1, r8 = 0, r9 = 0 , r10 = 0, r2 = 1, r11 = 4
+r6 and r7  are initial constants for fibannachi
+r8 for next iteration
+r9 for using ADD as MOV
+r10 as increment counter by 1 (r2) 
+r11 as the number of iterations
+
+
+1. ADD r6 r7 r8 // r8 = r6 + r7
+
+2. ADD r7 r9 r6 // using this add instruction as MOV
+
+3. ADD r8 r9 r7 // again moving r8 to r7
+
+4. ADD r10 r2 r10 // incrementing r10 
+
+5. BEQ r10 r11 0x2 // break the loop (skips 2 instructions)
+
+6. JUMP 0x1

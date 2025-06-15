@@ -35,7 +35,7 @@ initial begin
     // register_memory[5] = 16'b0000_0100_0000_0000;
 
     // test program fibbaonacci
-    //ADD r6 r7 r8 // r8 = r6 + r7
+    // ADD r6 r7 r8 // r8 = r6 + r7
     register_memory[1] = 16'b0000_0110_0111_1000;
     //ADD r7 r9 r6 // using this add instruction as MOV
     register_memory[2] = 16'b0000_0111_1001_0110;
@@ -61,7 +61,9 @@ initial begin
     // register_memory[4] = 17'b1011_0000_0000_0000;  // jump  
     // register_memory[5] = 17'b0101_0000_0001_0000;  
     // register_memory[6] = 17'b0000_0000_0001_0010;
-    // register_memory[7] = 17'b1011_0000_0000_0000; // jump to 0 instruction addr  
+    // register_memory[7] = 17'b1011_0000_0000_0000; // jump to 0 instruction addr 
+    //Loop for ever 
+    register_memory[16] = 16'b1011_0000_0000_1100;
 end
 
 

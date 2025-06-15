@@ -2,10 +2,13 @@
 
 module RISC_16_top(
     input clk,
-    input rst
+    input rst,
+    output [7:0] r4_out,  // Output for debugging
+    output [7:0] r8_out,   // Output for debugging
+    output [5:0] instruction_addr
 );
     
-    wire [5:0] instruction_addr;
+    // wire [5:0] instruction_addr;
     wire [16:0] instruction;
     
     wire [4:0] opcode;   // ALU Operation
@@ -40,6 +43,9 @@ module RISC_16_top(
     wire reg_enable;
     wire IR_enable;
     wire mem_enable;
+
+    // wire [7:0] r4_out;
+    // wire [7:0] r8_out;
     
     // Instantiate the 8-bit counter module
     program_counter uut (
@@ -93,7 +99,11 @@ module RISC_16_top(
     .read_data1(read_data1),
     .read_data2(read_data2),
     .reg_write(reg_write),
-    .reg_enable(reg_enable)
+    .reg_enable(reg_enable),
+    // Outputs for debugging
+    .r4_out(r4_out),
+    .r8_out(r8_out)
+
     );
     
     ALU alu(

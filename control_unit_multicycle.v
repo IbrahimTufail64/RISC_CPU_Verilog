@@ -34,9 +34,9 @@ always @(posedge clk or posedge reset) begin
         state <= next_state;
 end
 
-always @(posedge reset) begin
-        PC_enable = 1'b1;
-end
+// always @(posedge reset) begin
+//         PC_enable = 1'b1;
+// end
 
 // Next state logic
 always @(*) begin
@@ -92,7 +92,7 @@ always @(*) begin
             if (opcode < 7) begin
                 ALU_src = 1'b1;  // R-type
             end
-            else if (opcode[5] == 1'b1) begin
+            else if (opcode[4] == 1'b1) begin
                 ALU_src = 1'b0;  // I-type
                 immediate_signal = 1'b1; 
             end
